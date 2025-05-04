@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@if(TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["AlertMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+    </div>
+}   
+<section class="hero bg-dark text-white d-flex align-items-center" style="min-height: 80vh; background: url('/images/hero-bg.jpg') center/cover no-repeat;">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold">Quản Lý Bài Viết Khoa Học</h1>
+        <p class="lead mb-4">Nền tảng tối ưu cho việc tạo, phê duyệt và thống kê bài báo chuyên nghiệp.</p>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg me-3">Đăng ký</a>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-lg">Đăng nhập</a>
+        }
+        else
+        {
+            <p class="lead mb-4">Chào <strong>@User.Identity.Name</strong>!</p>
+            <a asp-controller="Articles" asp-action="Index" class="btn btn-primary btn-lg me-3">Bài viết của tôi</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Articles" asp-action="Pending" class="btn btn-outline-light btn-lg">Phê duyệt bài</a>
+            }
+        }
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Tính năng nổi bật</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-pencil-square fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Tạo bài viết dễ dàng</h5>
+                        <p class="card-text">Form nhập liệu thân thiện, hỗ trợ rich text và upload tài liệu đi kèm.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-check-circle fs-1 text-success mb-3"></i>
+                        <h5 class="card-title">Phê duyệt nhanh chóng</h5>
+                        <p class="card-text">Giao diện admin trực quan, xử lý duyệt/từ chối chỉ với vài click.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-bar-chart-line fs-1 text-warning mb-3"></i>
+                        <h5 class="card-title">Báo cáo thống kê</h5>
+                        <p class="card-text">Biểu đồ và KPI trình bày trực quan, hỗ trợ ra quyết định kịp thời.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <section class="bg-primary text-white py-5">
+        <div class="container text-center">
+            <h3 class="mb-3">Bắt đầu ngay hôm nay</h3>
+            <p class="mb-4">Tham gia cộng đồng nhà nghiên cứu và tận dụng quy trình quản lý bài viết tối ưu.</p>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg">Đăng ký miễn phí</a>
+        </div>
+    </section>
+}
+
+

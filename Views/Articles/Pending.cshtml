@@ -1,0 +1,40 @@
+﻿@model IEnumerable<QuanLyBaiViet.Models.Article>
+
+@{
+    ViewData["Title"] = "Phê duyệt bài viết";
+}
+
+<h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-@TempData["AlertType"] alert-dismissible fade show" role="alert">
+        @TempData["AlertMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@foreach (var item in Model)
+{
+    <div class="card mb-4">
+        <div class="card-body">
+            
+            <h4 class="card-subtitle mb-2 text-secondary">@item.Title</h4>
+            <p class="text-muted mb-1">Ngày tạo: @item.SubmitedDate.ToString("dd/MM/yyyy HH:mm")</p>
+            <p class="mb-2"><strong>Chủ đề:</strong> @item.Topic.TopicName</p>
+            <p class="mb-2"><strong>Tóm tắt:</strong> @item.Summary</p>
+            <p class="mb-3"><strong>Nội dung:</strong> @item.Content</p>
+            <h5 class="card-title mb-4">Tác giả: @item.Author.FullName</h5>
+            <form asp-action="Approve" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@item.ArticleId" />
+                <button type="submit" class="btn btn-sm btn-success">Phê duyệt</button>
+            </form>
+            <form asp-action="Reject" method="post" class="d-inline ms-2">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@item.ArticleId" />
+                <button type="submit" class="btn btn-sm btn-danger">Từ chối</button>
+            </form>
+        </div>
+    </div>
+}

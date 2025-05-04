@@ -1,0 +1,77 @@
+﻿@model IEnumerable<QuanLyBaiViet.Models.Article>
+
+@{
+    ViewData["Title"] = "Bài viết";
+}
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="alert alert-warning text-center" style="font-size:1.5rem;">
+        Vui lòng <a asp-controller="Account" asp-action="Login">đăng nhập</a> hoặc <a asp-controller="Account" asp-action="Register">đăng ký</a> để xem bài viết.
+    </div>
+    <a asp-controller="Home" asp-action="index">Quay về trang chủ</a>
+}
+else
+{
+
+
+    <h1 class="text-center mb-4">Bài viết của bạn</h1>
+    <hr/>
+    @if(TempData["AlertMessage"] != null)
+    {
+        var alerttype = TempData["AlertType"] as string ?? "info";
+        <div class="alert alert-@alerttype alert-dismissible fade show text-center" role="alert">
+            @TempData["AlertMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    }
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <h3 class="text-center mb-4">Bạn chưa có bài viết nào.</h3>
+            <p class="text-center">
+                Hãy <a asp-action="Create">tạo</a> bài viết mới
+            </p>
+        </div>
+    }
+    else
+    {
+        <p><a asp-action="Create">Thêm bài viết mới</a></p>
+        <div class="d-flex flex-column gap-4">
+            @foreach (var item in Model)
+            {
+                <div class="card mb-4">
+                    <div class="card-body">
+                        
+                        <h4 class="card-subtitle mb-2 text-secondary">@item.Title</h4>
+                        <p class="text-muted mb-1">Ngày tạo: @item.SubmitedDate.ToString("dd/MM/yyyy HH:mm")</p>
+                        <p class="mb-2"><strong>Chủ đề:</strong> @item.Topic.TopicName</p>
+                        <p class="mb-2"><strong>Tóm tắt:</strong> @item.Summary</p>
+                        <p class="mb-3"><strong>Nội dung:</strong> @item.Content</p>
+                        <h5 class="card-title mb-3">Tác giả: @item.Author.FullName</h5>
+
+                        @{
+                            var (text, cls) = item.Status switch
+                            {
+                                ArticleStatus.Pending => ("Chờ duyệt", "bg-warning text-dark px-2 py-1 rounded"),
+                                ArticleStatus.Approved => ("Đã duyệt", "bg-success text-white px-2 py-1 rounded"),
+                                ArticleStatus.Rejected => ("Từ chối", "bg-danger text-white px-2 py-1 rounded"),
+                                _ => (item.Status.ToString(), "bg-secondary text-white px-2 py-1 rounded")
+                            };
+                        }
+                        <span class="@cls mb-3 d-inline-block">@text</span>
+                        <a asp-action="Details" asp-route-id="@item.ArticleId" class="btn btn-sm btn-info">Chi tiết</a>
+                        @if (item.Status == ArticleStatus.Pending)
+                        {
+                            
+                            <a asp-action="Edit" asp-route-id="@item.ArticleId" class="btn btn-sm btn-primary ms-2">Sửa</a>
+                            <form asp-action="Delete" asp-route-id="@item.ArticleId" method="get" class="d-inline ms-2">
+                                <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

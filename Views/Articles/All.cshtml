@@ -1,0 +1,34 @@
+﻿@model IEnumerable<QuanLyBaiViet.Models.Article>
+@{
+    ViewBag.Title = "Tất cả bài viết";
+}
+<h1 class ="text-center mb-4">Tất cả bài viết</h1>
+<hr/>
+<div class="d-flex flex-column gap-4">
+    @foreach (var item in Model)
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+
+                <h4 class="card-subtitle mb-2 text-secondary">@item.Title</h4>
+                <p class="text-muted mb-1">Ngày tạo: @item.SubmitedDate.ToString("dd/MM/yyyy HH:mm")</p>
+                <p class="mb-2"><strong>Chủ đề:</strong> @item.Topic.TopicName</p>
+                <p class="mb-2"><strong>Tóm tắt:</strong> @item.Summary</p>
+                <p class="mb-3"><strong>Nội dung:</strong> @item.Content</p>
+                <h5 class="card-title mb-3">Tác giả: @item.Author.FullName</h5>
+
+                @{
+                    var (text, cls) = item.Status switch
+                    {
+                        ArticleStatus.Pending => ("Chờ duyệt", "bg-warning text-dark px-2 py-1 rounded"),
+                        ArticleStatus.Approved => ("Đã duyệt", "bg-success text-white px-2 py-1 rounded"),
+                        ArticleStatus.Rejected => ("Từ chối", "bg-danger text-white px-2 py-1 rounded"),
+                        _ => (item.Status.ToString(), "bg-secondary text-white px-2 py-1 rounded")
+                    };
+                }
+                <span class="@cls mb-3 d-inline-block">@text</span>
+                <a asp-action="Details" asp-route-id="@item.ArticleId" class="btn btn-sm btn-info">Chi tiết</a>
+            </div>
+        </div>
+    }
+</div>

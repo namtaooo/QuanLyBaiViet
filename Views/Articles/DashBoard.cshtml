@@ -1,0 +1,100 @@
+﻿@model ViewModels
+
+@{
+    ViewData["Title"] = "Thống kê";
+}
+
+<h1 class="mb-4 text-center">Bảng điều khiển thống kê</h1>
+
+<ul class="nav nav-pills justify-content-center mb-4" id="statTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="author-tab" data-bs-toggle="pill" data-bs-target="#author" type="button" role="tab">Theo tác giả</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="topic-tab" data-bs-toggle="pill" data-bs-target="#topic" type="button" role="tab">Theo chủ đề</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="status-tab" data-bs-toggle="pill" data-bs-target="#status" type="button" role="tab">Theo trạng thái</button>
+    </li>
+</ul>
+
+<div class="tab-content" id="statTabsContent">
+    <!-- Theo tác giả -->
+    <div class="tab-pane fade show active" id="author" role="tabpanel">
+        <div class="row g-3">
+            @foreach (var a in Model.AuthorStats)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h6 class="card-title">@a.AuthorName</h6>
+                            <p class="display-6 mb-0">@a.ArticleCount</p>
+                            <small>bài</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Theo chủ đề -->
+    <div class="tab-pane fade" id="topic" role="tabpanel">
+        <div class="row g-3">
+            @foreach (var t in Model.TopicStats)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card text-center border-primary">
+                        <div class="card-body">
+                            <h6 class="card-title">@t.TopicName</h6>
+                            <p class="display-6 mb-0">@t.TopicCount</p>
+                            <small>bài</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Theo trạng thái -->
+    <div class="tab-pane fade" id="status" role="tabpanel">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card bg-warning bg-opacity-25 text-center">
+                    <div class="card-body">
+                        <h6 class="card-title">Chờ duyệt</h6>
+                        <p class="display-6 mb-0">@Model.StatusStats.Pending</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success bg-opacity-25 text-center">
+                    <div class="card-body">
+                        <h6 class="card-title">Đã duyệt</h6>
+                        <p class="display-6 mb-0">@Model.StatusStats.Approved</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-danger bg-opacity-25 text-center">
+                    <div class="card-body">
+                        <h6 class="card-title">Từ chối</h6>
+                        <p class="display-6 mb-0">@Model.StatusStats.Rejected</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var triggerTabList = [].slice.call(document.querySelectorAll('#statTabs button'))
+        triggerTabList.forEach(function (triggerEl) {
+          var tabTrigger = new bootstrap.Tab(triggerEl)
+          triggerEl.addEventListener('click', function (event) {
+            event.preventDefault()
+            tabTrigger.show()
+          })
+        })
+    </script>
+}

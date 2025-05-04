@@ -1,0 +1,68 @@
+﻿@model QuanLyBaiViet.Models.Article
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+@* <h4>Article</h4> *@
+<hr />
+<div class="article-form-page">
+    <div class="article-form-container">
+        <div class="article-form-card">
+            <div class="article-form-body">
+                <h2 class="carticle-form-title">Sửa bài viết</h2>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ArticleId" />
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    @* <div class="form-group"> *@
+                    @*     <label asp-for="AuthorId" class="control-label"></label> *@
+                    @*     <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select> *@
+                    @*     <span asp-validation-for="AuthorId" class="text-danger"></span> *@
+                    @* </div> *@
+                    @* <div class="form-group"> *@
+                    @*     <label asp-for="SubmitedDate" class="control-label"></label> *@
+                    @*     <input asp-for="SubmitedDate" class="form-control" /> *@
+                    @*     <span asp-validation-for="SubmitedDate" class="text-danger"></span> *@
+                    @* </div> *@
+                    <div class="form-group">
+                        <label asp-for="Summary" class="control-label"></label>
+                        <textarea asp-for="Summary" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Content" class="control-label"></label>
+                        <textarea asp-for="Content" class="form-control" rows="10"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TopicID" class="control-label"></label>
+                        <select asp-for="TopicID" class="form-control" asp-items="ViewBag.TopicID"></select>
+                        <span asp-validation-for="TopicID" class="text-danger"></span>
+                    </div>
+                    @* <div class="form-group"> *@
+                    @*     <label asp-for="Status" class="control-label"></label> *@
+                    @*     <select asp-for="Status" class="form-control"></select> *@
+                    @*     <span asp-validation-for="Status" class="text-danger"></span> *@
+                    @* </div> *@
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary btn-block article-form-submit">Sửa</button>
+                    </div>
+                </form>
+                <div>
+                    <a asp-action="Index" class="justify-content-center">Quay về danh sách</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

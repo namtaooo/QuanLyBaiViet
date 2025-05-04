@@ -1,0 +1,69 @@
+﻿
+
+.article-card {
+	background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+	color: #ffffff;
+	border-radius: 1rem;
+	box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.25);
+	overflow: hidden;
+	transition: transform 0.3s ease;
+}
+
+.article-card:hover {
+	transform: translateY(-5px);
+}
+
+.article-card .card-body {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.article-card .card-title {
+	font-size: 1.25rem;
+	margin-bottom: 0.75rem;
+}
+
+.article-card .card-text {
+	flex: 1;
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.article-card .badge {
+		font-size: 0.7rem;
+		padding: 0.25em 0.5em;
+		border-radius: 0.5rem;
+	}
+
+.article-card .badge.bg-warning {
+		background-color: #fff8e1 !important;
+		color: #795548 !important;
+}
+
+.article-card .badge.bg-success {
+		background-color: #e8f5e9 !important;
+		color: #2e7d32 !important;
+}
+
+.article-card .badge.bg-danger {
+	background-color: #ffebee !important;
+	color: #c62828 !important;
+}
+
+.article-card .btn-outline-primary {
+	border-color: rgba(255, 255, 255, 0.75);
+	color: #ffffff;
+}
+
+.article-card .btn-outline-primary:hover {
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+.article-card .btn-outline-secondary {
+	border-color: rgba(255, 255, 255, 0.75);
+	color: #ffffff;
+}
+
+.article-card .btn-outline-secondary:hover {
+	background-color: rgba(255, 255, 255, 0.15);
+}
